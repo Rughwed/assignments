@@ -5,12 +5,12 @@ class User():
     def __init__(self,**dict1):
         self.user = dict1
         self.id = dict1['email']
-        self.passw = dict1['Password']
+        self.__passw = dict1['Password']
         self.lg_status = False
 
     def login(self,id,passw):
         if id == self.id:
-            if passw == self.passw:
+            if passw == self.__passw:
                 print("successfully loggedin")
                 self.lg_status = True
             else:
@@ -26,4 +26,3 @@ class User():
                 raise Exception("not loggedin")
         except:
             print(sys.exc_info())
-    
