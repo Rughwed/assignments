@@ -1,0 +1,40 @@
+2025-01-22 09:50:15 - INFO --> Log file created for user: rugved_kini
+2025-01-22 09:50:15 - INFO --> Validated Full Name: Rugved  Kini
+2025-01-22 09:50:15 - DEBUG --> Starting validate...
+2025-01-22 09:50:19 - INFO --> Valid input for Mobile No: 1234567890
+2025-01-22 09:50:19 - DEBUG --> validate Completed.
+2025-01-22 09:50:19 - DEBUG --> Starting validate...
+2025-01-22 09:50:21 - INFO --> Valid gender: Male
+2025-01-22 09:50:21 - DEBUG --> validate Completed.
+2025-01-22 09:50:21 - DEBUG --> Starting validate...
+2025-01-22 09:50:28 - INFO --> Valid input for Email: rugved30@gmail.in
+2025-01-22 09:50:28 - DEBUG --> validate Completed.
+2025-01-22 09:50:28 - DEBUG --> Starting validate...
+2025-01-22 09:50:33 - INFO --> Valid input for Pancard: AAAAA1234A
+2025-01-22 09:50:33 - DEBUG --> validate Completed.
+2025-01-22 09:50:33 - DEBUG --> Starting validate...
+2025-01-22 09:50:40 - INFO --> Valid input for Date of Birth: 2003-Apr-30
+2025-01-22 09:50:40 - DEBUG --> validate Completed.
+2025-01-22 09:50:40 - DEBUG --> Starting validate...
+2025-01-22 09:50:55 - INFO --> Valid input for Address: Mumbai , Maharashtra - 401304
+2025-01-22 09:50:55 - DEBUG --> validate Completed.
+2025-01-22 09:50:55 - DEBUG --> Starting validate...
+2025-01-22 09:51:04 - INFO --> Valid input for Password: Rugved30@
+2025-01-22 09:51:04 - DEBUG --> validate Completed.
+2025-01-22 09:51:04 - DEBUG --> Starting calculate_age...
+2025-01-22 09:51:04 - INFO --> Calculated age: 21
+2025-01-22 09:51:04 - DEBUG --> calculate_age Completed.
+2025-01-22 09:51:04 - INFO --> User registration completed.
+2025-01-22 09:51:04 - DEBUG --> Starting display...
+2025-01-22 09:51:04 - DEBUG --> display Completed.
+2025-01-22 09:51:04 - INFO --> Log file created for user: Rugved_Kini
+2025-01-22 09:51:04 - DEBUG --> Starting login...
+2025-01-22 09:51:14 - INFO --> Valid input entered: 1234567890
+2025-01-22 09:51:17 - INFO --> Successfully Logged-In: 1234567890
+2025-01-22 09:51:17 - DEBUG --> login Completed.
+2025-01-22 09:51:17 - DEBUG --> Starting bookTicket...
+2025-01-22 09:51:24 - INFO --> Ticket booked: Pune to Mumbai
+2025-01-22 09:51:24 - DEBUG --> bookTicket Completed.
+2025-01-22 09:51:24 - DEBUG --> Starting logout...
+2025-01-22 09:51:24 - INFO --> rugved30@gmail.in log out successfully!
+2025-01-22 09:51:24 - DEBUG --> logout Completed.
