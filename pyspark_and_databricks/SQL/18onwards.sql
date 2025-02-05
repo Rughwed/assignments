@@ -96,13 +96,15 @@ and p.BusinessEntityID = ba.BusinessEntityID
 --22. Find the name of employees working in group of North America territory
 select p.FirstName,p.LastName,t.Name,t.[group] from Person.Person p,
 Sales.SalesTerritory t,
-Sales.SalesTerritoryHistory th
-where t.TerritoryID = th.TerritoryID and
-th.BusinessEntityID = p.BusinessEntityID
+Sales.SalesTerritoryHistory th,
+HumanResources.Employee e
+where (t.TerritoryID = th.TerritoryID and
+th.BusinessEntityID = p.BusinessEntityID and
+p.BusinessEntityID = e.BusinessEntityID)
 and t.[Group] = 'North America'
 
 
---24. display the personal details of  employee whose payment is revised for more than once.
+--23. display the personal details of  employee whose payment is revised for more than once.
 SELECT e.BusinessEntityID,p.FirstName,p.LastName,COUNT(*) as rev
 FROM HumanResources.EmployeePayHistory e,
 Person.Person p
@@ -110,7 +112,7 @@ where p.BusinessEntityID = e.BusinessEntityID
 GROUP BY e.BusinessEntityID,p.FirstName,p.LastName
 HAVING COUNT(*) > 1;
 
---26. check if any employee from jobcandidate table is having any payment revisions
+--25. check if any employee from jobcandidate table is having any payment revisions
 select  e.BusinessEntityID,p.FirstName,p.LastName,count(*) as rev
 from HumanResources.JobCandidate j,
 HumanResources.EmployeePayHistory e	,
@@ -132,17 +134,22 @@ group by d.Name
 order by count(*) desc
 
 --check the employee whose payment is not yet revised
-select * from Person.Person where BusinessEntityID not in 
+select * from HumanResources.Employee where BusinessEntityID not in 
 (select BusinessEntityID from HumanResources.EmployeePayHistory
 )
 
 --29. find the job title having more revised payments
-select e.JobTitle,count(* )
+select jt,count(*) from (
+select e.JobTitle jt,e.BusinessEntityID bi,count(* ) cnt
 from HumanResources.EmployeePayHistory ph,
 HumanResources.Employee e
 where e.BusinessEntityID = ph.BusinessEntityID
-group by e.JobTitle
-order by count(*) desc
+group by e.JobTitle,e.BusinessEntityID
+having count(*) > 1
+) as t1 
+group by jt
+
+
 
 --31. find the colour wise count of the product (tbl: product)
 
@@ -217,6 +224,7 @@ group by gender
 --42. Which product is the oldest product as on the date 
 --(refer  the product sell start date)
 
-select top(1) ProductID,Name,DATEDIFF(DAY,SellStartDate,getdate()) prod_age
+select top(11) ProductID,Name,DATEDIFF(day,SellStartDate,getdate()) prod_age
 from Production.Product
+where SellEndDate is null
 order by prod_age desc
