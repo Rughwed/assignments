@@ -167,13 +167,15 @@ where SellEndDate is not null
 
 select class,Style ,avg( StandardCost) av_sc
 from Production.Product 
-where Class is not null and Style is not null
+where Class is not null or Style is not null
 group by class,style
 
 --check colour wise standard cost
 select Color,sum(StandardCost) total
 from Production.Product
+where color is not null
 group by color
+
 
 
 --35. find the product line wise standard cost
