@@ -1,4 +1,4 @@
---display empname,terriroty name,group,saleslastyear salesquota,bonus
+	--display empname,terriroty name,group,saleslastyear salesquota,bonus
 use AdventureWorks2022;
 select * from Sales.SalesPerson
 select * from Sales.SalesTerritory
