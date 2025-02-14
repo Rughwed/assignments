@@ -230,3 +230,11 @@ select top(11) ProductID,Name,DATEDIFF(day,SellStartDate,getdate()) prod_age
 from Production.Product
 where SellEndDate is null
 order by prod_age desc
+
+--60. Display the product name, standard cost, and time duration for the same cost. (Product cost history)
+select p.Name,ch.StandardCost,datediff(day,SellStartDate,SellEndDate)
+from Production.ProductCostHistory ch,
+Production.Product p
+where p.ProductID = ch.ProductID and enddate is not null
+group by p.Name,ch.StandardCost,datediff(day,SellStartDate,SellEndDate)
+
