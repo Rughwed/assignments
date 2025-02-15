@@ -427,9 +427,22 @@ from Sales.SalesOrderDetail
 group by SalesOrderID
 order by sum(OrderQty) desc
 
---32 INLINE VIEW
+-- 32. find the duration of payment revision on every interval  (inline view) Output must be as given format
+
+select f,ln,rc,DATEDIFF(year,lag,date)duration from(
+select distinct f,ln,rc,max(r)date,max(l)lag from (
+select  p.FirstName f,p.LastName ln,count(RateChangeDate)over(partition by p.BusinessEntityID) rc,RateChangeDate r,lag(RateChangeDate,1)over(partition by p.BusinessEntityID order by ratechangedate)l
+from HumanResources.EmployeePayHistory ph,
+Person.Person p
+where p.BusinessEntityID = ph.BusinessEntityID)t1
+group by f,ln,rc)t3
 
 --33. check if any employee from jobcandidate table is having any payment revisions
+
+select * from HumanResources.EmployeePayHistory where BusinessEntityID
+in(
+select BusinessEntityID from HumanResources.JobCandidate
+where BusinessEntityID is not null)
 
 --34.check the department having more salary revision
 
@@ -456,7 +469,15 @@ group by e.JobTitle
 order by count(*) desc
 
 --37. find the employee whose payment is revised in shortest duration (inline view)
-
+select f,ln,rc,DATEDIFF(year,lag,date)duration from(
+select distinct f,ln,rc,max(r)date,max(l)lag from (
+select  p.FirstName f,p.LastName ln,count(RateChangeDate)over(partition by p.BusinessEntityID) rc,RateChangeDate r,lag(RateChangeDate,1)over(partition by p.BusinessEntityID order by ratechangedate)l
+from HumanResources.EmployeePayHistory ph,
+Person.Person p
+where p.BusinessEntityID = ph.BusinessEntityID)t1
+group by f,ln,rc)t3
+where DATEDIFF(year,lag,date) is not null
+order by DATEDIFF(year,lag,date)
 
 
 --38. find the colour wise count of the product (tbl: product)
@@ -559,9 +580,16 @@ select BusinessEntityID,count(distinct CreditCardID) from sales.PersonCreditCard
 group by BusinessEntityID 
 having count(distinct CreditCardID)>1
 --53.Find the product wise sale price (sales order details)
+select  ProductID,avg(UnitPrice*OrderQty)
+from Sales.SalesOrderDetail
+group by ProductID
+order by ProductID
+
 
 --54.Find the total values for line total product having maximum order
-
+select top 1 ProductID,sum(OrderQty)order_qty,sum(LineTotal)lintotal from Sales.SalesOrderDetail
+group by ProductID
+order by sum(OrderQty) desc
 
 
 --55.Calculate the age of employees
@@ -598,13 +626,27 @@ from Production.Product
 order by prod_age desc
 
 --60. Display the product name, standard cost, and time duration for the same cost. (Product cost history)
+select p.Name,ch.StandardCost,DATEDIFF(MONTH,StartDate,EndDate)
+from Production.ProductCostHistory ch,
+Production.Product p
+where p.ProductID = ch.ProductID
+and enddate is not null
 
 --61.Find the purchase id where shipment is done 1 month later of order date  
+select PurchaseOrderID,OrderDate,ShipDate from 
+Purchasing.PurchaseOrderHeader
+where DATEDIFF(MONTH,OrderDate,ShipDate) = 1
  
 --62.Find the sum of total due where shipment is done 1 month later of order date ( purchase order header)
+select sum(TotalDue)totaldue from 
+Purchasing.PurchaseOrderHeader
+where DATEDIFF(month,OrderDate,ShipDate)=1
+ 
 --63. Find the average difference in due date and ship date based on  online order flag
+select * from Purchasing.ShipMethod
 
 --64.Display business entity id, marital status, gender, vacationhr, average vacation based on marital status
+select BusinessEntityID,MaritalStatus,Gender,VacationHours,avg(VacationHours)over(partition by maritalstatus) from HumanResources.Employee
 
 use adventureworks2022;
 
